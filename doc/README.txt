@@ -5,6 +5,8 @@ Assignment One
 
 NOTES:
 Features I didn't have time to implement: Emailing claims, sorting claims by start date.
+Dates are just strings, for some reason Date.valueOf(String s) wouldn't compile,
+so I just decided to use strings because parsing them manually would be tedious.
 Also, I should probably have written my own ArrayAdapter for the list views so that
 more information is shown about claims and expenses.
 
