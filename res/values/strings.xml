@@ -15,6 +15,10 @@
     <string name="category">Category</string>
     <string name="amountSpent">Amount Spent</string>
     <string name="currency">Currency</string>
-    <string name="submit">Submit Claim</string>
+    <string name="submit">Submit/Unsubmit Claim</string>
+    <string name="claims">Claims</string>
+    <string name="totalAmount">Total Amount</string>
+    <string name="expenses">Expenses</string>    
+    <string name="emptyString"></string>
 
 </resources>

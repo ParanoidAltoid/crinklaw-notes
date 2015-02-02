@@ -46,7 +46,7 @@ public class ViewExpensesActivity extends Activity {
 		//claims.add(new Claim(new Date("2014-08-08"), new Date(), "test"));
 		
 		listAdapter = new SimpleAdapter(this, listViewData, android.R.layout.simple_list_item_1, 
-				Claim.getAttributes(), new int[] {android.R.id.text1});
+				Expense.getAttributes(), new int[] {android.R.id.text1});
 		
 		lv.setAdapter(listAdapter);
 		
@@ -199,10 +199,11 @@ public class ViewExpensesActivity extends Activity {
 		finish();
 	}
 	
-	public void submiButtonPressed(View view){
+	public void submitButtonPressed(View view){
 		
-		claim.setSubmitted(true);
+		claim.setSubmitted(!claim.isSubmitted());
 	}
+
 	
 }
 	

@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
 	private static final int REQUEST_CODE_CREATE_CLAIM = 0;
 	private static final int REQUEST_CODE_EDIT_CLAIM = 1;
 	private static final int REQUEST_CODE_VIEW_EXPENSES = 2;
+	private static final int REQUEST_CODE_VIEW_SUMMARY = 3;
 	private List<Claim> claims;
 	private SimpleAdapter listAdapter;
 	private List<Map<String, String>> listViewData;
@@ -88,7 +89,8 @@ public class MainActivity extends Activity {
 	       menu.add(1, 1, 1, "View Expenses");
 	       menu.add(1, 2, 2, "Email Claim");
 	       menu.add(1, 3, 3, "Edit Claim");
-	       menu.add(1, 4, 4, "Delete");
+	       menu.add(1, 4, 4, "View Claim Summary");
+	       menu.add(1, 5, 5, "Delete");
 	   }
 	 
 	 //Toast.makeText(this, "Item id ["+itemId+"]", Toast.LENGTH_SHORT).show();	 
@@ -113,7 +115,12 @@ public class MainActivity extends Activity {
 	    	 }
 	    	 
 	    	 break;
-	     case 4://delete
+	     case 4://view summary
+	    	 Intent i3 = new Intent(this, SummaryActivity.class);
+	    	 i3.putExtra("claim", claims.get(selectedClaimIndex));
+	    	 startActivity(i3);
+	    	 break;
+	     case 5://delete
 	    	 claims.remove(selectedClaimIndex);
 	    	 listViewData.remove(selectedClaimIndex);
 	    	 saveClaims();
@@ -125,7 +132,7 @@ public class MainActivity extends Activity {
 	 }
 
 
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

@@ -1,7 +1,9 @@
 package com.crinklaw_notes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -72,8 +74,14 @@ public class Expense implements Serializable {
 	public Map<String, String> toListItem() {
 		Map <String, String> map = new HashMap<String, String>();
 		map.put("description", this.description);
+		map.put("amountSpent", this.amountSpent);
+		map.put("currency", this.currency);
 		
 		return map;	
+	}
+
+	public static String[] getAttributes() {
+		return new String[] {"description", "amountSpent", "currency"};
 	}
 
 }
