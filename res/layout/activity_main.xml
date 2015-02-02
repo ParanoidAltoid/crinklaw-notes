@@ -11,9 +11,9 @@
     <ListView
         android:id="@+id/claims"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" >
+        android:layout_height="match_parent"
+        tools:listitem="@android:layout/simple_list_item_1" >
+
     </ListView>
 
 </RelativeLayout>
