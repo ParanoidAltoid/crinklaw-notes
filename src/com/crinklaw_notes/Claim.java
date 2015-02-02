@@ -9,7 +9,7 @@ import java.util.Map;
 public class Claim implements Serializable{
 	
 	/**
-	 * 
+	 * Stores the data for a claim.
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Expense> expenses;

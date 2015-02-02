@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 public class EditExpenseActivity extends Activity {
+	/*
+	 * Provides a form for editing expenses
+	 * 
+	 */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

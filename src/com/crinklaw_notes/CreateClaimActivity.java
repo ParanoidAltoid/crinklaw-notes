@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 public class CreateClaimActivity extends Activity {
+	/* 
+	 * Proivdes a form for claim creation.
+	 */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

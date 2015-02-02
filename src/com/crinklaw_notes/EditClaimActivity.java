@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 public class EditClaimActivity extends Activity {
+	/*Provides a form for editing claims.
+	 * */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

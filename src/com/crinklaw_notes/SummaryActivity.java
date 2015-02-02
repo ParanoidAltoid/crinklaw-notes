@@ -8,20 +8,16 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 
 public class SummaryActivity extends Activity {
+	/*
+	 * Provides a summary of a claim.
+	 */
 
 	private Claim claim;
 	private SimpleAdapter listAdapter;

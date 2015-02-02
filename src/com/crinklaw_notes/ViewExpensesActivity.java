@@ -22,6 +22,10 @@ import android.widget.Toast;
 
 
 public class ViewExpensesActivity extends Activity {
+	/*
+	 * Displays expenses of a claim and allows actions pertaining to
+	 * expenses to be performed.
+	 */
 
 	private static final int REQUEST_CODE_CREATE_EXPENSE = 0;
 	private static final int REQUEST_CODE_EDIT_EXPENSE = 1;

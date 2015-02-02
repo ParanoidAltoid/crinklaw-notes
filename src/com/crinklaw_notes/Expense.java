@@ -9,9 +9,8 @@ import java.util.Map;
 
 
 public class Expense implements Serializable {
-
 	/**
-	 * 
+	 * Data for expenses.
 	 */
 	private static final long serialVersionUID = 1L;
 	private String date;

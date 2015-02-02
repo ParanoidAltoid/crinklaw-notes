@@ -29,12 +29,16 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
+/*
+ * Displays claims and allows actions pertaining to claims
+ * 
+ * Note: Email claim not implemented.
+ * */
+	
 	private static final String CLAIMS_FILENAME = "claims.sav";
 	private static final int REQUEST_CODE_CREATE_CLAIM = 0;
 	private static final int REQUEST_CODE_EDIT_CLAIM = 1;
 	private static final int REQUEST_CODE_VIEW_EXPENSES = 2;
-	private static final int REQUEST_CODE_VIEW_SUMMARY = 3;
 	private List<Claim> claims;
 	private SimpleAdapter listAdapter;
 	private List<Map<String, String>> listViewData;
