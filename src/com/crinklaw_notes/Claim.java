@@ -5,18 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Claim{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Claim {
 	
 	private List<Expense> expenses;
-	private Date startDate;
-	private Date endDate;	
+	private String startDate;
+	private String endDate;
+	private String description;	
 	
-	public Claim(){
-		
+	public Claim(String startDate, String endDate, String description){
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.setDescription(description);
 	}
 	
 	public static String[] getAttributes() {
-		return new String[] {"startDate"};
+		return new String[] {"description"};
 	}
 
 
@@ -28,29 +34,38 @@ public class Claim{
 		this.expenses = expenses;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	
 
 	public Map<String, String> toListItem() {
 		Map <String, String> map = new HashMap<String, String>();
-		map.put("startDate", this.startDate.toString());
+		map.put("description", this.description);
 		
 		return map;	
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	
 
 

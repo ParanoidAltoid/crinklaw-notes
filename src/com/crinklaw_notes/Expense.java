@@ -6,13 +6,13 @@ import java.util.Date;
 
 public class Expense {
 
-	private Date date;
-	private ExpenseCategory category;
+	private String date;
+	private String category;
 	private String description;
 	private double amountSpent;
 	private String currency;
 
-	public Expense(Date date, ExpenseCategory category, String description,
+	public Expense(String date, String category, String description,
 			double amountSpent, String currency) {
 		
 		this.setDate(date);
@@ -23,19 +23,19 @@ public class Expense {
 		
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public ExpenseCategory getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(ExpenseCategory category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 

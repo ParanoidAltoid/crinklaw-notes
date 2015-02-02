@@ -22,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.crinklaw_notes.CreateClaimActivity"
+            android:label="@string/createClaim" >
+        </activity>
+        <activity
+            android:name="com.crinklaw_notes.EditClaimActivity"
+            android:label="@string/editClaim" >
+        </activity>
     </application>
 
 </manifest>

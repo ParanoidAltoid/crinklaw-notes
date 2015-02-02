@@ -9,23 +9,38 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import java.util.HashMap;
 import java.util.Map;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	private static final String CLAIMS_FILENAME = "claims.sav";
+	private static final int REQUEST_CODE_CREATE_CLAIM = 1;
+	private static final int REQUEST_CODE_EDIT_CLAIM = 0;
 	private List<Claim> claims;
+	private SimpleAdapter listAdapter;
+	private List<Map<String, String>> listViewData;
+	private int selectedClaimIndex;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +55,134 @@ public class MainActivity extends Activity {
 
 		loadClaims();
 		
-		SimpleAdapter simpleAdpt = new SimpleAdapter(this, createList(claims), android.R.layout.simple_list_item_1, 
+		listViewData = createList(claims);
+		
+		//claims.add(new Claim(new Date("2014-08-08"), new Date(), "test"));
+		
+		listAdapter = new SimpleAdapter(this, listViewData, android.R.layout.simple_list_item_1, 
 				Claim.getAttributes(), new int[] {android.R.id.text1});
 		
-		lv.setAdapter(simpleAdpt);
+		lv.setAdapter(listAdapter);
+	
+		/*
+		// React to user clicks on item
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parentAdapter, View view, int position, long id) {
+				
+			}
+			
+			
+		});*/
+		
+		registerForContextMenu(lv);
+
+		
 	}
 
+	 @Override
+	   public void onCreateContextMenu(ContextMenu menu, View v,
+	           ContextMenuInfo menuInfo) {
+	       super.onCreateContextMenu(menu, v, menuInfo);
+	       AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) menuInfo;
+	       
+	       selectedClaimIndex = aInfo.position;
+	       //HashMap map =  (HashMap) listAdapter.getItem(aInfo.position);
+	       
+	       //menu.setHeaderTitle("Options for " + map.get("planet"));
+	       menu.add(1, 1, 1, "View Expenses");
+	       menu.add(1, 2, 2, "Add Expense");
+	       menu.add(1, 3, 3, "Email");
+	       menu.add(1, 4, 4, "Edit Claim");
+	       menu.add(1, 5, 5, "Delete");
+	   }
+	 
+	 //Toast.makeText(this, "Item id ["+itemId+"]", Toast.LENGTH_SHORT).show();	 
+	 @Override
+	 public boolean onContextItemSelected(MenuItem item) {
+	     int itemId = item.getItemId();
+	     switch (itemId){
+	     case 4://edit claim
+	     	Intent i = new Intent(this, EditClaimActivity.class);
+	    	startActivityForResult(i, REQUEST_CODE_EDIT_CLAIM);
+	     case 5://delete
+	    	 claims.remove(selectedClaimIndex);
+	    	 listViewData.remove(selectedClaimIndex);
+	    	 saveClaims();
+
+	    	 listAdapter.notifyDataSetChanged();
+	     }
+	     return true;
+	 }
+
+
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);		
+		getMenuInflater().inflate(R.menu.main, menu);
 		
 		return true;
 	}
+	
 
-	//converts a list to the format needed by listview adapter.
+	//http://developer.android.com/guide/topics/ui/menus.html
+	//feb 1 2015
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.createClaim:
+	        	Intent i = new Intent(this, CreateClaimActivity.class);
+	        	startActivityForResult(i, REQUEST_CODE_CREATE_CLAIM);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+
+	//http://www.android-ios-tutorials.com/android/switch-between-activities-in-android/
+	//feb 1 2015
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case REQUEST_CODE_CREATE_CLAIM:
+			if(resultCode == RESULT_OK) {
+
+	        	Claim claim = new Claim(data.getStringExtra("startDate"),
+	        			data.getStringExtra("endDate"),
+	        			data.getStringExtra("description"));
+	        	claims.add(claim);
+	        	
+	        	listViewData.add(claim.toListItem());
+	        	
+	        	saveClaims();
+	        	listAdapter.notifyDataSetChanged();
+	        }
+		/*case REQUEST_CODE_EDIT_CLAIM:
+			if(resultCode == RESULT_OK){
+				if (data.getStringExtra("startDate").contentEquals("") == false)
+					claims.get(selectedClaimIndex).setStartDate(data.getStringExtra("startDate"));
+				
+				if (data.getStringExtra("endDate").contentEquals("") == false)
+					claims.get(selectedClaimIndex).setEndDate(data.getStringExtra("endDate"));
+				
+				if (data.getStringExtra("description").contentEquals("") == false)
+					claims.get(selectedClaimIndex).setDescription(data.getStringExtra(""));
+				
+				listViewData.set(selectedClaimIndex, claims.get(selectedClaimIndex).toListItem());
+				listAdapter.notifyDataSetChanged();
+			}*/
+	        break;
+	    }
+	}
+
+	//converts a list of claims to the format needed by listview adapter.
 	public static List<Map<String, String>> createList(List<Claim> elements) {
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		for (Claim element: elements){
 			list.add(element.toListItem());
 		}
+
 		return list;
 	}
 	
@@ -91,8 +213,9 @@ public class MainActivity extends Activity {
 
 	}
 	
+
 	
-	private void saveClaims(String text, Date date) {
+	private void saveClaims() {
 		try {
 						
 			FileOutputStream fos = openFileOutput(CLAIMS_FILENAME, 0);
@@ -109,6 +232,4 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
-
-
 }
