@@ -1,6 +1,8 @@
 package com.crinklaw_notes;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -9,11 +11,11 @@ public class Expense {
 	private String date;
 	private String category;
 	private String description;
-	private double amountSpent;
+	private String amountSpent;
 	private String currency;
 
 	public Expense(String date, String category, String description,
-			double amountSpent, String currency) {
+			String amountSpent, String currency) {
 		
 		this.setDate(date);
 		this.setCategory(category);
@@ -47,11 +49,11 @@ public class Expense {
 		this.description = description;
 	}
 
-	public double getAmountSpent() {
+	public String getAmountSpent() {
 		return amountSpent;
 	}
 
-	public void setAmountSpent(double amountSpent) {
+	public void setAmountSpent(String amountSpent) {
 		this.amountSpent = amountSpent;
 	}
 
@@ -61,6 +63,13 @@ public class Expense {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+
+	public Map<String, String> toListItem() {
+		Map <String, String> map = new HashMap<String, String>();
+		map.put("description", this.description);
+		
+		return map;	
 	}
 
 }

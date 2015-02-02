@@ -1,5 +1,6 @@
 package com.crinklaw_notes;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,8 +9,12 @@ import java.util.Map;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Claim {
+public class Claim implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Expense> expenses;
 	private String startDate;
 	private String endDate;

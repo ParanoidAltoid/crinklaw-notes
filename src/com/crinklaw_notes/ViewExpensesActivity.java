@@ -33,31 +33,27 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class ViewExpensesActivity extends Activity {
 
-	private static final String CLAIMS_FILENAME = "claims.sav";
-	private static final int REQUEST_CODE_CREATE_CLAIM = 0;
-	private static final int REQUEST_CODE_EDIT_CLAIM = 1;
-	private static final int REQUEST_CODE_VIEW_EXPENSES = 2;
-	private List<Claim> claims;
+	private static final int REQUEST_CODE_CREATE_EXPENSE = 0;
+	private static final int REQUEST_CODE_EDIT_EXPENSE = 1;
+	private Claim claim;
 	private SimpleAdapter listAdapter;
 	private List<Map<String, String>> listViewData;
-	private int selectedClaimIndex;
+	private int selectedExpenseIndex;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_view_expenses);
 		
 		//http://www.javacodegeeks.com/2013/06/android-listview-tutorial-and-basic-example.html
 		//1 feb 2015
 		
 
-		ListView lv = (ListView) findViewById(R.id.claims);
+		ListView lv = (ListView) findViewById(R.id.expenses);
 
-		loadClaims();
-		
-		listViewData = createList(claims);
+		updateListViewData();
 		
 		//claims.add(new Claim(new Date("2014-08-08"), new Date(), "test"));
 		
@@ -86,7 +82,7 @@ public class MainActivity extends Activity {
 	       super.onCreateContextMenu(menu, v, menuInfo);
 	       AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) menuInfo;
 	       
-	       selectedClaimIndex = aInfo.position;
+	       selectedExpenseIndex = aInfo.position;
 	       //HashMap map =  (HashMap) listAdapter.getItem(aInfo.position);
 	       
 	       //menu.setHeaderTitle("Options for " + map.get("planet"));
@@ -96,25 +92,17 @@ public class MainActivity extends Activity {
 	       menu.add(1, 4, 4, "Delete");
 	   }
 	 
-	 //Toast.makeText(this, "Item id ["+itemId+"]", Toast.LENGTH_SHORT).show();	 
 	 @Override
 	 public boolean onContextItemSelected(MenuItem item) {
 	     int itemId = item.getItemId();
 	     switch (itemId){
-	     case 1://view expenses
-	    	 Intent i = new Intent(this, ViewExpensesActivity.class);
-	    	 startActivityForResult(i, REQUEST_CODE_VIEW_EXPENSES);
-	    	 break;
-	     case 2://email claim
-	    	 break;
-	     case 3://edit claim
+	     case 1://edit claim
 	    	 Intent i2= new Intent(this, CreateClaimActivity.class);
-	    	 startActivityForResult(i2, REQUEST_CODE_EDIT_CLAIM);
+	    	 startActivityForResult(i2, REQUEST_CODE_EDIT_EXPENSE);
 	    	 break;
-	     case 4://delete
-	    	 claims.remove(selectedClaimIndex);
-	    	 listViewData.remove(selectedClaimIndex);
-	    	 saveClaims();
+	     case 2://delete
+	    	 claim.getExpenses().remove(selectedExpenseIndex);
+	    	 listViewData.remove(selectedExpenseIndex);
 
 	    	 listAdapter.notifyDataSetChanged();
 	    	 break;
@@ -140,9 +128,9 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
 	    switch (item.getItemId()) {
-	        case R.id.createClaim:
+	        case R.id.createExpense:
 	        	Intent i = new Intent(this, CreateClaimActivity.class);
-	        	startActivityForResult(i, REQUEST_CODE_CREATE_CLAIM);
+	        	startActivityForResult(i, REQUEST_CODE_CREATE_EXPENSE);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -153,38 +141,44 @@ public class MainActivity extends Activity {
 	//feb 1 2015
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-		case REQUEST_CODE_CREATE_CLAIM:
+		case REQUEST_CODE_CREATE_EXPENSE:
 			if(resultCode == RESULT_OK) {
 
-				String test  = data.getStringExtra("description");
+	        	Expense expense = new Expense(data.getStringExtra("date"),
+	        			data.getStringExtra("category"),
+	        			data.getStringExtra("description"),
+	        			data.getStringExtra("amountSpent"),
+	        			data.getStringExtra("currency"));
+	        	
+	        	this.claim.getExpenses().add(expense);
+	        	
+	        	listViewData.add(expense.toListItem());
 
-	        	Claim claim = new Claim(data.getStringExtra("startDate"),
-	        			data.getStringExtra("endDate"),
-	        			data.getStringExtra("description"));
-	        	claims.add(claim);
-	        	
-	        	listViewData.add(claim.toListItem());
-	        	
-	        	saveClaims();
 	        	listAdapter.notifyDataSetChanged();
 			}
         	break;
-		case REQUEST_CODE_EDIT_CLAIM:
+		case REQUEST_CODE_EDIT_EXPENSE:
 			if(resultCode == RESULT_OK) {
 
-				if (!data.getStringExtra("startDate").contentEquals(""))
-					claims.get(selectedClaimIndex).setStartDate(data.getStringExtra("startDate"));
+				if (!data.getStringExtra("date").contentEquals(""))
+					claim.getExpenses().get(selectedExpenseIndex).setDate(data.getStringExtra("date"));
 				
-				if (!data.getStringExtra("endDate").contentEquals(""))
-					claims.get(selectedClaimIndex).setEndDate(data.getStringExtra("endDate"));
+				if (!data.getStringExtra("category").contentEquals(""))
+					claim.getExpenses().get(selectedExpenseIndex).setCategory(data.getStringExtra("category"));
 				
 				if (!data.getStringExtra("description").contentEquals(""))
-					claims.get(selectedClaimIndex).setDescription(data.getStringExtra("description"));
+					claim.getExpenses().get(selectedExpenseIndex).setDescription(data.getStringExtra("description"));
+				
+				if (!data.getStringExtra("amountSpent").contentEquals(""))
+					claim.getExpenses().get(selectedExpenseIndex).setAmountSpent(data.getStringExtra("amountSpent"));
+				
+				if (!data.getStringExtra("currency").contentEquals(""))
+					claim.getExpenses().get(selectedExpenseIndex).setCurrency(data.getStringExtra("currency"));
+				
+				
 
-	        	saveClaims();
-	        	
 	        	//listViewData = createList(claims);
-	        	listViewData.set(selectedClaimIndex, claims.get(selectedClaimIndex).toListItem());
+	        	listViewData.set(selectedExpenseIndex, claim.getExpenses().get(selectedExpenseIndex).toListItem());
 	        	listAdapter.notifyDataSetChanged();
 	        }
 	        break;
@@ -192,59 +186,14 @@ public class MainActivity extends Activity {
 	}
 
 	//converts a list of claims to the format needed by listview adapter.
-	public static List<Map<String, String>> createList(List<Claim> elements) {
+	public void updateListViewData() {
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		for (Claim element: elements){
+		for (Expense element: claim.getExpenses()){
 			list.add(element.toListItem());
 		}
 
-		return list;
+		this.listViewData = list;
 	}
 	
-	private void loadClaims() {
-		claims = new ArrayList<Claim>();
-		try {
-			FileInputStream fis = openFileInput(CLAIMS_FILENAME);
-		
-			Gson gson = new Gson();
-			
-			//From joshua2ua in lab 3:
-			Type dataType = new TypeToken<List<Claim>>() {}.getType();
-			InputStreamReader isr = new InputStreamReader(fis);
-			claims = gson.fromJson(isr, dataType);
-			fis.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		if (claims == null)
-			claims = new ArrayList<Claim>();
-		
-
-	}
-	
-
-	
-	private void saveClaims() {
-		try {
-						
-			FileOutputStream fos = openFileOutput(CLAIMS_FILENAME, 0);
-			Gson gson = new Gson();
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			gson.toJson(claims, osw);
-			osw.flush();
-			fos.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
+	
