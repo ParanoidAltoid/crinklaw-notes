@@ -1,13 +1,17 @@
 package com.crinklaw_notes;
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 
 
-public class Expense {
+public class Expense implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String date;
 	private String category;
 	private String description;

@@ -10,5 +10,11 @@
     <string name="description">Description</string>
     <string name="ok">OK</string>
     <string name="editClaim">Edit Claim</string>
+    <string name="createExpense">Add Expense</string>
+    <string name="date">Date</string>
+    <string name="category">Category</string>
+    <string name="amountSpent">Amount Spent</string>
+    <string name="currency">Currency</string>
+    <string name="submit">Submit Claim</string>
 
 </resources>

@@ -1,26 +1,13 @@
 package com.crinklaw_notes;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import java.util.Map;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -32,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class ViewExpensesActivity extends Activity {
 
@@ -49,7 +37,7 @@ public class ViewExpensesActivity extends Activity {
 		
 		//http://www.javacodegeeks.com/2013/06/android-listview-tutorial-and-basic-example.html
 		//1 feb 2015
-		
+		claim = (Claim) getIntent().getSerializableExtra("claim");
 
 		ListView lv = (ListView) findViewById(R.id.expenses);
 
@@ -83,22 +71,23 @@ public class ViewExpensesActivity extends Activity {
 	       AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) menuInfo;
 	       
 	       selectedExpenseIndex = aInfo.position;
-	       //HashMap map =  (HashMap) listAdapter.getItem(aInfo.position);
 	       
-	       //menu.setHeaderTitle("Options for " + map.get("planet"));
-	       menu.add(1, 1, 1, "View Expenses");
-	       menu.add(1, 2, 2, "Email Claim");
-	       menu.add(1, 3, 3, "Edit Claim");
-	       menu.add(1, 4, 4, "Delete");
+	       menu.add(1, 1, 1, "Edit Expense");
+	       menu.add(1, 2, 2, "Delete");
 	   }
 	 
 	 @Override
 	 public boolean onContextItemSelected(MenuItem item) {
 	     int itemId = item.getItemId();
 	     switch (itemId){
-	     case 1://edit claim
-	    	 Intent i2= new Intent(this, CreateClaimActivity.class);
-	    	 startActivityForResult(i2, REQUEST_CODE_EDIT_EXPENSE);
+	     case 1://edit expense
+	    	 if (!claim.isSubmitted()){
+	    		 Intent i2= new Intent(this, EditExpenseActivity.class);
+	    		 startActivityForResult(i2, REQUEST_CODE_EDIT_EXPENSE);
+	    	 }
+	    	 else {
+	    		 Toast.makeText(this, "Claim is submited, cannot edit.", Toast.LENGTH_SHORT).show();	 
+	    	 }
 	    	 break;
 	     case 2://delete
 	    	 claim.getExpenses().remove(selectedExpenseIndex);
@@ -116,7 +105,7 @@ public class ViewExpensesActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.claim_menu, menu);
 		
 		return true;
 	}
@@ -129,8 +118,14 @@ public class ViewExpensesActivity extends Activity {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	        case R.id.createExpense:
-	        	Intent i = new Intent(this, CreateClaimActivity.class);
-	        	startActivityForResult(i, REQUEST_CODE_CREATE_EXPENSE);
+	        	if (!claim.isSubmitted()){
+	        		Intent i = new Intent(this, CreateExpenseActivity.class);
+	        		startActivityForResult(i, REQUEST_CODE_CREATE_EXPENSE);;
+	        	}
+	        	else {
+	        		Toast.makeText(this, "Claim is submited, cannot edit.", Toast.LENGTH_SHORT).show();	 
+	        	}
+	        	
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -193,6 +188,20 @@ public class ViewExpensesActivity extends Activity {
 		}
 
 		this.listViewData = list;
+	}
+	
+	
+	public void okButtonPressed(View view){
+		
+		getIntent().putExtra("claim", claim);
+		
+		setResult(RESULT_OK, getIntent());     
+		finish();
+	}
+	
+	public void submiButtonPressed(View view){
+		
+		claim.setSubmitted(true);
 	}
 	
 }

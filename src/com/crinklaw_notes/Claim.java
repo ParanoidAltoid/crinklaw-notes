@@ -1,13 +1,10 @@
 package com.crinklaw_notes;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import android.os.Parcel;
-import android.os.Parcelable;
 
 public class Claim implements Serializable{
 	
@@ -18,12 +15,16 @@ public class Claim implements Serializable{
 	private List<Expense> expenses;
 	private String startDate;
 	private String endDate;
-	private String description;	
+	private String description;
+	private boolean submitted;
 	
 	public Claim(String startDate, String endDate, String description){
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.setDescription(description);
+		
+		this.expenses = new ArrayList<Expense>();
+		this.setSubmitted(false);
 	}
 	
 	public static String[] getAttributes() {
@@ -69,6 +70,14 @@ public class Claim implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean isSubmitted() {
+		return submitted;
+	}
+
+	public void setSubmitted(boolean submitted) {
+		this.submitted = submitted;
 	}
 
 	

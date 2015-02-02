@@ -30,6 +30,9 @@
             android:name="com.crinklaw_notes.EditClaimActivity"
             android:label="@string/editClaim" >
         </activity>
+        <activity android:name="ViewExpensesActivity"></activity>
+        <activity android:name="EditExpenseActivity"></activity>
+        <activity android:name="CreateExpenseActivity"></activity>
     </application>
 
 </manifest>

@@ -8,9 +8,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -20,7 +17,6 @@ import java.util.Map;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -30,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -103,13 +98,20 @@ public class MainActivity extends Activity {
 	     switch (itemId){
 	     case 1://view expenses
 	    	 Intent i = new Intent(this, ViewExpensesActivity.class);
+	    	 i.putExtra("claim", claims.get(selectedClaimIndex));
 	    	 startActivityForResult(i, REQUEST_CODE_VIEW_EXPENSES);
 	    	 break;
 	     case 2://email claim
 	    	 break;
 	     case 3://edit claim
-	    	 Intent i2= new Intent(this, CreateClaimActivity.class);
-	    	 startActivityForResult(i2, REQUEST_CODE_EDIT_CLAIM);
+	    	 if (!claims.get(selectedClaimIndex).isSubmitted()){
+	    		 Intent i2= new Intent(this, CreateClaimActivity.class);
+	    		 startActivityForResult(i2, REQUEST_CODE_EDIT_CLAIM);
+	    	 }
+	    	 else {
+	    		 Toast.makeText(this, "Claim is submited, cannot edit.", Toast.LENGTH_SHORT).show();	 
+	    	 }
+	    	 
 	    	 break;
 	     case 4://delete
 	    	 claims.remove(selectedClaimIndex);
@@ -156,8 +158,6 @@ public class MainActivity extends Activity {
 		case REQUEST_CODE_CREATE_CLAIM:
 			if(resultCode == RESULT_OK) {
 
-				String test  = data.getStringExtra("description");
-
 	        	Claim claim = new Claim(data.getStringExtra("startDate"),
 	        			data.getStringExtra("endDate"),
 	        			data.getStringExtra("description"));
@@ -180,6 +180,18 @@ public class MainActivity extends Activity {
 				
 				if (!data.getStringExtra("description").contentEquals(""))
 					claims.get(selectedClaimIndex).setDescription(data.getStringExtra("description"));
+
+	        	saveClaims();
+	        	
+	        	//listViewData = createList(claims);
+	        	listViewData.set(selectedClaimIndex, claims.get(selectedClaimIndex).toListItem());
+	        	listAdapter.notifyDataSetChanged();
+	        }
+	        break;
+		case REQUEST_CODE_VIEW_EXPENSES:
+			if(resultCode == RESULT_OK) {
+
+				claims.set(selectedClaimIndex, (Claim) data.getSerializableExtra("claim"));
 
 	        	saveClaims();
 	        	
