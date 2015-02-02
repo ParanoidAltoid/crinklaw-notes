@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -56,6 +58,7 @@ public class MainActivity extends Activity {
 		ListView lv = (ListView) findViewById(R.id.claims);
 
 		loadClaims();
+		sortClaimsByDate();
 		
 		listViewData = createList(claims);
 		
@@ -73,6 +76,20 @@ public class MainActivity extends Activity {
 	}
 
 	
+	private void sortClaimsByDate() {
+
+		Comparator<Claim> comp = new Comparator<Claim>() {
+			@Override
+			public int compare(Claim arg0, Claim arg1) {
+				return arg0.getStartDate().compareTo(arg0.getStartDate());
+			}
+		};
+		
+		Collections.sort(claims, comp);
+		
+	}
+	
+
 	//http://www.javacodegeeks.com/2013/06/android-listview-tutorial-and-basic-example.html
 	//1 feb 2015
 	 @Override
