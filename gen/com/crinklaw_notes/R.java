@@ -24,22 +24,23 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int acceptClaimButton=0x7f080012;
-        public static final int action_settings=0x7f080013;
+        public static final int acceptClaimButton=0x7f080013;
+        public static final int action_settings=0x7f080014;
         public static final int amountSpentTextBox=0x7f08000b;
         public static final int button1=0x7f080006;
         public static final int categoryTextBox=0x7f080008;
-        public static final int claims=0x7f08000f;
-        public static final int createClaim=0x7f080015;
-        public static final int createExpense=0x7f080014;
+        public static final int claims=0x7f080010;
+        public static final int createClaim=0x7f080016;
+        public static final int createExpense=0x7f080015;
         public static final int currencyTextBox=0x7f08000d;
         public static final int dateTextBox=0x7f080007;
         public static final int descriptionTextBox=0x7f080005;
+        public static final int editText1=0x7f08000f;
         public static final int endDateTextBox=0x7f080003;
         public static final int expenseDescriptionTextBox=0x7f08000a;
         public static final int expenseOKButton=0x7f08000e;
-        public static final int expenses=0x7f080011;
-        public static final int listView1=0x7f080010;
+        public static final int expenses=0x7f080012;
+        public static final int listView1=0x7f080011;
         public static final int startDateTextBox=0x7f080001;
         public static final int textView1=0x7f080000;
         public static final int textView2=0x7f080002;
@@ -53,9 +54,10 @@ public final class R {
         public static final int activity_create_expense=0x7f030002;
         public static final int activity_edit_claim=0x7f030003;
         public static final int activity_edit_expense=0x7f030004;
-        public static final int activity_main=0x7f030005;
-        public static final int activity_summary=0x7f030006;
-        public static final int activity_view_expenses=0x7f030007;
+        public static final int activity_email=0x7f030005;
+        public static final int activity_main=0x7f030006;
+        public static final int activity_summary=0x7f030007;
+        public static final int activity_view_expenses=0x7f030008;
     }
     public static final class menu {
         public static final int claim_menu=0x7f070000;
@@ -73,6 +75,7 @@ public final class R {
         public static final int date=0x7f05000a;
         public static final int description=0x7f050006;
         public static final int editClaim=0x7f050008;
+        public static final int emailAddress=0x7f050013;
         public static final int emptyString=0x7f050012;
         public static final int endDate=0x7f050005;
         public static final int expenses=0x7f050011;

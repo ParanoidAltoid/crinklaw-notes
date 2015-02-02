@@ -17,6 +17,8 @@ public class Claim implements Serializable{
 	private String endDate;
 	private String description;
 	private boolean submitted;
+	private boolean approved;
+	private boolean resubmitted;
 	
 	public Claim(String startDate, String endDate, String description){
 		this.startDate = startDate;
@@ -78,6 +80,22 @@ public class Claim implements Serializable{
 
 	public void setSubmitted(boolean submitted) {
 		this.submitted = submitted;
+	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
+	public boolean isResubmitted() {
+		return resubmitted;
+	}
+
+	public void setResubmitted(boolean resubmitted) {
+		this.resubmitted = resubmitted;
 	}
 
 	

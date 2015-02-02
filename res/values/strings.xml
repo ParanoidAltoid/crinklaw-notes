@@ -19,6 +19,7 @@
     <string name="claims">Claims</string>
     <string name="totalAmount">Total Amount</string>
     <string name="expenses">Expenses</string>    
-    <string name="emptyString"></string>
+    <string name="emptyString"></string>    
+    <string name="emailAddress">Email Address</string>
 
 </resources>

@@ -108,6 +108,9 @@ public class MainActivity extends Activity {
 	    	 startActivityForResult(i, REQUEST_CODE_VIEW_EXPENSES);
 	    	 break;
 	     case 2://email claim
+	    	 Intent i4 = new Intent(this, EmailActivity.class);
+	    	 i4.putExtra("claim", claims.get(selectedClaimIndex));
+	    	 startActivity(i4);
 	    	 break;
 	     case 3://edit claim
 	    	 if (!claims.get(selectedClaimIndex).isSubmitted()){

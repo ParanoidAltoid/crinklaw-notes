@@ -34,6 +34,7 @@
         <activity android:name="EditExpenseActivity"></activity>
         <activity android:name="CreateExpenseActivity"></activity>
         <activity android:name="SummaryActivity"></activity>
+        <activity android:name="EmailActivity"></activity>
     </application>
 
 </manifest>
