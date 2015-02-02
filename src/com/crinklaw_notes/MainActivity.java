@@ -100,13 +100,16 @@ public class MainActivity extends Activity {
 	 @Override
 	 public boolean onContextItemSelected(MenuItem item) {
 	     int itemId = item.getItemId();
+	     
+	     Toast.makeText(this, "Item id ["+listViewData.get(0).get("description")+"]", Toast.LENGTH_SHORT).show();	 
 	     switch (itemId){
 	     case 4://edit claim
 	     	Intent i = new Intent(this, EditClaimActivity.class);
 	    	startActivityForResult(i, REQUEST_CODE_EDIT_CLAIM);
 	     case 5://delete
 	    	 claims.remove(selectedClaimIndex);
-	    	 listViewData.remove(selectedClaimIndex);
+	    	 //listViewData.remove(selectedClaimIndex);
+	    	 listViewData = createList(claims);
 	    	 saveClaims();
 
 	    	 listAdapter.notifyDataSetChanged();
@@ -158,7 +161,7 @@ public class MainActivity extends Activity {
 	        	saveClaims();
 	        	listAdapter.notifyDataSetChanged();
 	        }
-		/*case REQUEST_CODE_EDIT_CLAIM:
+		case REQUEST_CODE_EDIT_CLAIM:
 			if(resultCode == RESULT_OK){
 				if (data.getStringExtra("startDate").contentEquals("") == false)
 					claims.get(selectedClaimIndex).setStartDate(data.getStringExtra("startDate"));
@@ -169,9 +172,11 @@ public class MainActivity extends Activity {
 				if (data.getStringExtra("description").contentEquals("") == false)
 					claims.get(selectedClaimIndex).setDescription(data.getStringExtra(""));
 				
-				listViewData.set(selectedClaimIndex, claims.get(selectedClaimIndex).toListItem());
+				//listViewData.set(selectedClaimIndex, claims.get(selectedClaimIndex).toListItem());
+				saveClaims();
+				listViewData = createList(claims);
 				listAdapter.notifyDataSetChanged();
-			}*/
+			}
 	        break;
 	    }
 	}
