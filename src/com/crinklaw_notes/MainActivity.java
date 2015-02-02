@@ -35,8 +35,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 	private static final String CLAIMS_FILENAME = "claims.sav";
-	private static final int REQUEST_CODE_CREATE_CLAIM = 1;
-	private static final int REQUEST_CODE_EDIT_CLAIM = 0;
+	private static final int REQUEST_CODE = 0;
 	private List<Claim> claims;
 	private SimpleAdapter listAdapter;
 	private List<Map<String, String>> listViewData;
@@ -63,8 +62,7 @@ public class MainActivity extends Activity {
 				Claim.getAttributes(), new int[] {android.R.id.text1});
 		
 		lv.setAdapter(listAdapter);
-	
-		/*
+		
 		// React to user clicks on item
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parentAdapter, View view, int position, long id) {
@@ -72,7 +70,7 @@ public class MainActivity extends Activity {
 			}
 			
 			
-		});*/
+		});
 		
 		registerForContextMenu(lv);
 
@@ -100,16 +98,10 @@ public class MainActivity extends Activity {
 	 @Override
 	 public boolean onContextItemSelected(MenuItem item) {
 	     int itemId = item.getItemId();
-	     
-	     Toast.makeText(this, "Item id ["+listViewData.get(0).get("description")+"]", Toast.LENGTH_SHORT).show();	 
 	     switch (itemId){
-	     case 4://edit claim
-	     	Intent i = new Intent(this, EditClaimActivity.class);
-	    	startActivityForResult(i, REQUEST_CODE_EDIT_CLAIM);
 	     case 5://delete
 	    	 claims.remove(selectedClaimIndex);
-	    	 //listViewData.remove(selectedClaimIndex);
-	    	 listViewData = createList(claims);
+	    	 listViewData.remove(selectedClaimIndex);
 	    	 saveClaims();
 
 	    	 listAdapter.notifyDataSetChanged();
@@ -137,7 +129,7 @@ public class MainActivity extends Activity {
 	    switch (item.getItemId()) {
 	        case R.id.createClaim:
 	        	Intent i = new Intent(this, CreateClaimActivity.class);
-	        	startActivityForResult(i, REQUEST_CODE_CREATE_CLAIM);
+	        	startActivityForResult(i, REQUEST_CODE);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -148,8 +140,10 @@ public class MainActivity extends Activity {
 	//feb 1 2015
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-		case REQUEST_CODE_CREATE_CLAIM:
+		case REQUEST_CODE:
 			if(resultCode == RESULT_OK) {
+
+				String test  = data.getStringExtra("description");
 
 	        	Claim claim = new Claim(data.getStringExtra("startDate"),
 	        			data.getStringExtra("endDate"),
@@ -161,22 +155,6 @@ public class MainActivity extends Activity {
 	        	saveClaims();
 	        	listAdapter.notifyDataSetChanged();
 	        }
-		case REQUEST_CODE_EDIT_CLAIM:
-			if(resultCode == RESULT_OK){
-				if (data.getStringExtra("startDate").contentEquals("") == false)
-					claims.get(selectedClaimIndex).setStartDate(data.getStringExtra("startDate"));
-				
-				if (data.getStringExtra("endDate").contentEquals("") == false)
-					claims.get(selectedClaimIndex).setEndDate(data.getStringExtra("endDate"));
-				
-				if (data.getStringExtra("description").contentEquals("") == false)
-					claims.get(selectedClaimIndex).setDescription(data.getStringExtra(""));
-				
-				//listViewData.set(selectedClaimIndex, claims.get(selectedClaimIndex).toListItem());
-				saveClaims();
-				listViewData = createList(claims);
-				listAdapter.notifyDataSetChanged();
-			}
 	        break;
 	    }
 	}
