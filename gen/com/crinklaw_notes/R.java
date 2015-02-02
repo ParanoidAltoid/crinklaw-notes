@@ -25,13 +25,14 @@ public final class R {
     }
     public static final class id {
         public static final int acceptClaimButton=0x7f080013;
-        public static final int action_settings=0x7f080014;
+        public static final int action_settings=0x7f080015;
         public static final int amountSpentTextBox=0x7f08000b;
         public static final int button1=0x7f080006;
+        public static final int button2=0x7f080014;
         public static final int categoryTextBox=0x7f080008;
         public static final int claims=0x7f080010;
-        public static final int createClaim=0x7f080016;
-        public static final int createExpense=0x7f080015;
+        public static final int createClaim=0x7f080017;
+        public static final int createExpense=0x7f080016;
         public static final int currencyTextBox=0x7f08000d;
         public static final int dateTextBox=0x7f080007;
         public static final int descriptionTextBox=0x7f080005;
@@ -67,6 +68,7 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int amountSpent=0x7f05000c;
         public static final int app_name=0x7f050000;
+        public static final int approved=0x7f050014;
         public static final int category=0x7f05000b;
         public static final int claims=0x7f05000f;
         public static final int createClaim=0x7f050003;

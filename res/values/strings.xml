@@ -20,6 +20,7 @@
     <string name="totalAmount">Total Amount</string>
     <string name="expenses">Expenses</string>    
     <string name="emptyString"></string>    
-    <string name="emailAddress">Email Address</string>
+    <string name="emailAddress">Email Address</string>    
+    <string name="approved">Mark as Approved</string>
 
 </resources>

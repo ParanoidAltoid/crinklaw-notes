@@ -204,7 +204,19 @@ public class ViewExpensesActivity extends Activity {
 	
 	public void submitButtonPressed(View view){
 		
-		claim.setSubmitted(!claim.isSubmitted());
+		if (claim.isSubmitted()){
+			claim.setReturned(true);
+			claim.setSubmitted(false);
+		}
+		else {
+			claim.setSubmitted(true);
+		}
+	}
+	
+	public void approvedButtonPressed(View view){
+		
+		claim.setSubmitted(true);
+		claim.setApproved(true);
 	}
 
 	

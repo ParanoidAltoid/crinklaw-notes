@@ -65,21 +65,16 @@ public class MainActivity extends Activity {
 				Claim.getAttributes(), new int[] {android.R.id.text1});
 		
 		lv.setAdapter(listAdapter);
-		
-		// React to user clicks on item
-		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parentAdapter, View view, int position, long id) {
-				
-			}
-			
-			
-		});
+
 		
 		registerForContextMenu(lv);
 
 		
 	}
 
+	
+	//http://www.javacodegeeks.com/2013/06/android-listview-tutorial-and-basic-example.html
+	//1 feb 2015
 	 @Override
 	   public void onCreateContextMenu(ContextMenu menu, View v,
 	           ContextMenuInfo menuInfo) {

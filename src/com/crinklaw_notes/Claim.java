@@ -18,7 +18,7 @@ public class Claim implements Serializable{
 	private String description;
 	private boolean submitted;
 	private boolean approved;
-	private boolean resubmitted;
+	private boolean returned;
 	
 	public Claim(String startDate, String endDate, String description){
 		this.startDate = startDate;
@@ -27,10 +27,29 @@ public class Claim implements Serializable{
 		
 		this.expenses = new ArrayList<Expense>();
 		this.setSubmitted(false);
+		this.setReturned(false);
+		this.setApproved(false);
 	}
 	
 	public static String[] getAttributes() {
-		return new String[] {"description"};
+		//return new String[] {"description", "status"};
+		return new String[] {"claim"};
+	}
+	
+	//does logic on approved and submitted and resubmitted to get status.
+	public String getStatus() {
+		
+		if (approved){
+			return "Approved";
+		}
+
+		if (returned)
+			return "Returned";
+		
+		if (submitted)
+			return "Submitted";
+		
+		return "In Progress";
 	}
 
 
@@ -61,7 +80,9 @@ public class Claim implements Serializable{
 
 	public Map<String, String> toListItem() {
 		Map <String, String> map = new HashMap<String, String>();
-		map.put("description", this.description);
+		//map.put("description", this.description);
+		//map.put("status", this.getStatus());
+		map.put("claim", this.toString());
 		
 		return map;	
 	}
@@ -90,16 +111,18 @@ public class Claim implements Serializable{
 		this.approved = approved;
 	}
 
-	public boolean isResubmitted() {
-		return resubmitted;
+	public boolean isReturned() {
+		return returned;
 	}
 
-	public void setResubmitted(boolean resubmitted) {
-		this.resubmitted = resubmitted;
+	public void setReturned(boolean resubmitted) {
+		this.returned = resubmitted;
 	}
 
-	
-
+	@Override
+	public String toString(){
+		return this.getDescription() + "\n " + this.getStatus();
+	}
 
 
 

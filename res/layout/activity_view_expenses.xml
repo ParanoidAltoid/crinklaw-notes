@@ -11,7 +11,7 @@
     <ListView
         android:id="@+id/expenses"
         android:layout_width="match_parent"
-        android:layout_height="319dp" >
+        android:layout_height="284dp" >
 
     </ListView>
 
@@ -30,5 +30,12 @@
         android:layout_height="wrap_content"
         android:text="@string/submit" 
         android:onClick="submitButtonPressed"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/approved" 
+        android:onClick="approvedButtonPressed"/>
 
 </LinearLayout>
